@@ -24,12 +24,30 @@ const COUNTRY_CODES = [
   { code: '1', name: 'United States (+1)', flag: '🇺🇸' },
   { code: '44', name: 'United Kingdom (+44)', flag: '🇬🇧' },
   { code: '234', name: 'Nigeria (+234)', flag: '🇳🇬' },
+  { code: '263', name: 'Zimbabwe (+263)', flag: '🇿🇼' },
+  { code: '233', name: 'Ghana (+233)', flag: '🇬🇭' },
+  { code: '254', name: 'Kenya (+254)', flag: '🇰🇪' },
+  { code: '256', name: 'Uganda (+256)', flag: '🇺🇬' },
+  { code: '255', name: 'Tanzania (+255)', flag: '🇹🇿' },
+  { code: '27', name: 'South Africa (+27)', flag: '🇿🇦' },
+  { code: '237', name: 'Cameroon (+237)', flag: '🇨🇲' },
+  { code: '221', name: 'Senegal (+221)', flag: '🇸🇳' },
+  { code: '251', name: 'Ethiopia (+251)', flag: '🇪🇹' },
+  { code: '260', name: 'Zambia (+260)', flag: '🇿🇲' },
+  { code: '265', name: 'Malawi (+265)', flag: '🇲🇼' },
+  { code: '250', name: 'Rwanda (+250)', flag: '🇷🇼' },
+  { code: '231', name: 'Liberia (+231)', flag: '🇱🇷' },
+  { code: '232', name: 'Sierra Leone (+232)', flag: '🇸🇱' },
+  { code: '220', name: 'Gambia (+220)', flag: '🇬🇲' },
+  { code: '267', name: 'Botswana (+267)', flag: '🇧🇼' },
+  { code: '258', name: 'Mozambique (+258)', flag: '🇲🇿' },
+  { code: '243', name: 'DR Congo (+243)', flag: '🇨🇩' },
+  { code: '225', name: "Ivory Coast (+225)", flag: '🇨🇮' },
   { code: '971', name: 'UAE (+971)', flag: '🇦🇪' },
   { code: '966', name: 'Saudi Arabia (+966)', flag: '🇸🇦' },
   { code: '62', name: 'Indonesia (+62)', flag: '🇮🇩' },
   { code: '880', name: 'Bangladesh (+880)', flag: '🇧🇩' },
   { code: '55', name: 'Brazil (+55)', flag: '🇧🇷' },
-  { code: '27', name: 'South Africa (+27)', flag: '🇿🇦' },
   { code: '49', name: 'Germany (+49)', flag: '🇩🇪' },
   { code: '33', name: 'France (+33)', flag: '🇫🇷' },
   { code: '39', name: 'Italy (+39)', flag: '🇮🇹' },
@@ -422,11 +440,11 @@ export default function App() {
                     <select
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
-                      className="h-10 px-3 bg-transparent text-xs font-medium text-slate-700 focus:outline-none cursor-pointer"
+                      className="h-10 px-2 sm:px-3 bg-transparent text-xs font-medium text-slate-700 focus:outline-none cursor-pointer max-w-[125px] sm:max-w-[155px]"
                     >
                       {COUNTRY_CODES.map((c) => (
                         <option key={c.code} value={c.code}>
-                          {c.flag} +{c.code}
+                          {c.flag} +{c.code} ({c.name.split(' (')[0]})
                         </option>
                       ))}
                     </select>
