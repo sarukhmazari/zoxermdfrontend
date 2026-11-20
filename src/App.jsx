@@ -70,7 +70,7 @@ export default function App() {
   const [token, setToken] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [expiresIn, setExpiresIn] = useState(300); // 5 mins in seconds
+  const [expiresIn, setExpiresIn] = useState(120); // 2 mins in seconds
 
   // Backend Health State
   const [backendHealth, setBackendHealth] = useState({ online: false, checking: true });
@@ -192,7 +192,7 @@ export default function App() {
       setPairingCode(data.pairingCode);
       setRequestId(data.requestId);
       setToken(data.token);
-      setExpiresIn(300);
+      setExpiresIn(data.expiresInSeconds || 120);
       setStatus('WAITING_WHATSAPP');
     } catch (err) {
       setStatus('FAILED');
@@ -213,7 +213,7 @@ export default function App() {
     setRequestId(null);
     setToken(null);
     setErrorMsg(null);
-    setExpiresIn(300);
+    setExpiresIn(120);
     clearInterval(pollIntervalRef.current);
     clearInterval(timerRef.current);
   };
