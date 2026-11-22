@@ -48,6 +48,7 @@ const COUNTRY_CODES = [
   { code: '62', name: 'Indonesia (+62)', flag: '🇮🇩' },
   { code: '880', name: 'Bangladesh (+880)', flag: '🇧🇩' },
   { code: '55', name: 'Brazil (+55)', flag: '🇧🇷' },
+  { code: '509', name: 'Haiti (+509)', flag: '🇭🇹' },
   { code: '49', name: 'Germany (+49)', flag: '🇩🇪' },
   { code: '33', name: 'France (+33)', flag: '🇫🇷' },
   { code: '39', name: 'Italy (+39)', flag: '🇮🇹' },
