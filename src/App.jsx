@@ -33,6 +33,7 @@ const COUNTRY_CODES = [
   { code: '237', name: 'Cameroon (+237)', flag: '🇨🇲' },
   { code: '221', name: 'Senegal (+221)', flag: '🇸🇳' },
   { code: '251', name: 'Ethiopia (+251)', flag: '🇪🇹' },
+  { code: '252', name: 'Somalia (+252)', flag: '🇸🇴' },
   { code: '260', name: 'Zambia (+260)', flag: '🇿🇲' },
   { code: '265', name: 'Malawi (+265)', flag: '🇲🇼' },
   { code: '250', name: 'Rwanda (+250)', flag: '🇷🇼' },
