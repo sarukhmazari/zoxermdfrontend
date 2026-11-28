@@ -20,6 +20,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const COUNTRY_CODES = [
   { code: '92', name: 'Pakistan (+92)', flag: '🇵🇰' },
+  { code: '93', name: 'Afghanistan (+93)', flag: '🇦🇫' },
   { code: '91', name: 'India (+91)', flag: '🇮🇳' },
   { code: '1', name: 'United States (+1)', flag: '🇺🇸' },
   { code: '44', name: 'United Kingdom (+44)', flag: '🇬🇧' },
@@ -57,11 +58,13 @@ const COUNTRY_CODES = [
   { code: '90', name: 'Turkey (+90)', flag: '🇹🇷' },
   { code: '20', name: 'Egypt (+20)', flag: '🇪🇬' },
   { code: '60', name: 'Malaysia (+60)', flag: '🇲🇾' },
-  { code: '63', name: 'Philippines (+63)', flag: '🇵🇭' }
+  { code: '63', name: 'Philippines (+63)', flag: '🇵🇭' },
+  { code: 'custom', name: 'Other / Custom (+)', flag: '🌐' }
 ];
 
 export default function App() {
   const [countryCode, setCountryCode] = useState('92');
+  const [customCountryCode, setCustomCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [fullPhone, setFullPhone] = useState('');
   
@@ -160,13 +163,22 @@ export default function App() {
     e.preventDefault();
     setErrorMsg(null);
 
+    const activeCode = countryCode === 'custom' 
+      ? customCountryCode.replace(/[^0-9]/g, '') 
+      : countryCode;
+
+    if (!activeCode) {
+      setErrorMsg('Please enter a valid country code (e.g. 93, 92, 1).');
+      return;
+    }
+
     const cleanInput = phoneNumber.replace(/[^0-9]/g, '').replace(/^0+/, '');
-    if (!cleanInput || cleanInput.length < 7) {
+    if (!cleanInput || cleanInput.length < 5) {
       setErrorMsg('Please enter a valid phone number.');
       return;
     }
 
-    const combined = `${countryCode}${cleanInput}`;
+    const combined = `${activeCode}${cleanInput}`;
     setFullPhone(combined);
     setStatus('REQUESTING');
     setPairingCode(null);
@@ -442,15 +454,32 @@ export default function App() {
                     <select
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
-                      className="h-10 px-2 sm:px-3 bg-transparent text-xs font-medium text-slate-700 focus:outline-none cursor-pointer max-w-[125px] sm:max-w-[155px]"
+                      className="h-10 px-2 sm:px-3 bg-transparent text-xs font-medium text-slate-700 focus:outline-none cursor-pointer max-w-[130px] sm:max-w-[165px]"
                     >
                       {COUNTRY_CODES.map((c) => (
                         <option key={c.code} value={c.code}>
-                          {c.flag} +{c.code} ({c.name.split(' (')[0]})
+                          {c.flag} {c.code === 'custom' ? c.name : `+${c.code} (${c.name.split(' (')[0]})`}
                         </option>
                       ))}
                     </select>
                   </div>
+
+                  {/* Manual/Custom Country Code Input (Visible when "Other / Custom" selected) */}
+                  {countryCode === 'custom' && (
+                    <div className="flex-shrink-0 flex items-center border-r border-slate-200 bg-slate-100/70 px-2">
+                      <span className="text-xs font-semibold text-slate-500 mr-1">+</span>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="Code"
+                        value={customCountryCode}
+                        onChange={(e) => setCustomCountryCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        disabled={status === 'REQUESTING'}
+                        className="w-14 sm:w-16 h-10 text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent"
+                        title="Enter numeric country code e.g. 93, 44, 1"
+                      />
+                    </div>
+                  )}
 
                   {/* Number Input */}
                   <input
@@ -464,13 +493,15 @@ export default function App() {
                   />
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1.5">
-                  Enter digits without spaces or leading zero (e.g. 3232391033).
+                  {countryCode === 'custom' 
+                    ? 'Enter country code (e.g. 93 for Afghanistan) then phone number without leading 0.' 
+                    : 'Enter digits without spaces or leading zero (e.g. 3232391033).'}
                 </p>
               </div>
 
               <button
                 type="submit"
-                disabled={status === 'REQUESTING' || !phoneNumber}
+                disabled={status === 'REQUESTING' || !phoneNumber || (countryCode === 'custom' && !customCountryCode)}
                 className="w-full h-10 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white text-sm font-medium rounded-lg transition-colors shadow-sm flex items-center justify-center space-x-2"
               >
                 {status === 'REQUESTING' ? (
